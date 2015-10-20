@@ -14,6 +14,7 @@ namespace WindowsFormsApplication1
     {
         private string[] fileLocations;
         private string parseTarget;
+        private string exportValue;
         private LinkedList<string> frequencyValues = new LinkedList<string>();
         private LinkedList<string> gainValues = new LinkedList<string>();
         LinkedList<string> qualityValues = new LinkedList<string>();
@@ -24,6 +25,7 @@ namespace WindowsFormsApplication1
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
+            exportValue = "";
         }
 
         void Form1_DragEnter(object sender, DragEventArgs e)
@@ -57,20 +59,23 @@ namespace WindowsFormsApplication1
             {
                 target = target.Substring(1, target.Length - 1);
             }
+
+            int areaOfFocus = 0; // This denotes the 61 characters that makes up each line of values to pull from the txt file.
             for (int counter = 0; counter < 20; counter ++) //for each filter (there will always be 20 filters)
             {
-                int areaOfFocus = 61 * counter; // This denotes the 61 characters that makes up each line of values to pull from the txt file.
 
                 if (target.Substring(14 + areaOfFocus, 8).Equals(" None   "))
                 {
-                    return; // the empty filter case. nothing to do here.
+                    // the empty filter case. nothing to do here.
+                    areaOfFocus += 14;
                 }
                 else
                 {
-                    parseSubstring(target.Substring(areaOfFocus, 61));
+                    exportValue += parseSubstring(target.Substring(areaOfFocus, 61));
+                    areaOfFocus = 61 * counter;
                 }
             }
-            Console.Write("");
+            Console.Write(exportValue);
             return;
         }
         string parseSubstring(string substring)
