@@ -68,8 +68,7 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            exportValue = header + frequencies + gains + qualities + footer;
-            System.IO.File.WriteAllText(@"C:\Users\Public\TestFolder\Derek.peace", exportValue);
+            createFile();
             return;
         }
 
@@ -97,6 +96,12 @@ namespace WindowsFormsApplication1
             string qholder = substring.Substring(57, 4);
             qholder = qholder.Replace(" ", String.Empty);
             qualities += "Quality" + (index+1) + "=" + qholder + "\r\n";
+        }
+        void createFile()
+        {
+            System.IO.Directory.CreateDirectory(@"C:\Users\Public\PeaceConverter\");
+            exportValue = header + frequencies + gains + qualities + footer;
+            System.IO.File.WriteAllText(@"C:\Users\Public\PeaceConverter\Derek.peace", exportValue);
         }
     }
 }
