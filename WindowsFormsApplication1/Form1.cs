@@ -15,9 +15,7 @@ namespace WindowsFormsApplication1
         private string[] fileLocations;
         private string parseTarget;
         private string exportValue;
-        private LinkedList<string> frequencyValues = new LinkedList<string>();
-        private LinkedList<string> gainValues = new LinkedList<string>();
-        LinkedList<string> qualityValues = new LinkedList<string>();
+        string frequencies = "", gains = "", qualities = "";
 
         public Form1()
         {
@@ -36,18 +34,10 @@ namespace WindowsFormsApplication1
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
             fileLocations = (string[])e.Data.GetData(DataFormats.FileDrop);
-            // handles mutiple files that have been selected for drag and drop
-            // neeed to find the target, best case.
-            /*foreach (string file in fileLocations)
-            {
-                parseTarget += file;
-                parseTarget = System.IO.File.ReadAllText(file);
-            }*/
-            //This just blindly takes the first file read in (if there are multiples, use above code)
-            // Oct 7, 2015 7:21:19 
             parseTarget = System.IO.File.ReadAllText(fileLocations[0]);
             parseHeader(parseTarget);
         }
+
         void parseHeader(string target)
         {
             target = target.Replace("\r\n", String.Empty);
@@ -71,46 +61,38 @@ namespace WindowsFormsApplication1
                 }
                 else
                 {
-                    exportValue += parseSubstring(target.Substring(areaOfFocus, 61));
+                    parseSubstring(target.Substring(areaOfFocus, 61), counter);
                     areaOfFocus = 61 * counter;
                 }
             }
+            exportValue = frequencies + gains + qualities;
             Console.Write(exportValue);
             return;
         }
-        string parseSubstring(string substring)
+
+        void parseSubstring(string substring, int index)
         {
 
-            frequencyValues.AddLast(substring.Substring(28, 7));
-            gainValues.AddLast(substring.Substring(45,5));
-            qualityValues.AddLast(substring.Substring(57, 4));
+            if (index == 0)
+                frequencies = "[Frequencies]";
 
-            string finalValue = "[Frequencies]";
-            foreach (string value in frequencyValues)
-            {
-                int counter = 1;
-                string holder = value;
-                holder = value.Replace(" ", String.Empty);
-                finalValue += "Frequency" + counter + "=" + holder + "\r\n";
-                counter++;
-            }
+            string fholder = substring.Substring(28, 7);
+            fholder = fholder.Replace(" ", String.Empty);
+            frequencies += "Frequency" + (index+1) + "=" + fholder + "\r\n";
 
-            finalValue += "[Gains]";
-            foreach (string value in gainValues)
-            {
-                int counter = 1;
-                finalValue += "Gain" + counter + "=" + value + "\r\n";
-                counter++;
-            }
+            if (index == 0)
+                gains = "[Gains]";
 
-            finalValue += "[Qualities]";
-            foreach (string value in qualityValues)
-            {
-                int counter = 1;
-                finalValue += "Quality" + counter + "=" + value + "\r\n";
-                counter++;
-            }
-            return finalValue;
+            string gholder = substring.Substring(45, 5);
+            gholder = gholder.Replace(" ", String.Empty);
+            gains += "Gain" + (index+1) + "=" + gholder + "\r\n";
+                
+            if (index == 0)
+                qualities = "[Qualities]";
+
+            string qholder = substring.Substring(57, 4);
+            qholder = qholder.Replace(" ", String.Empty);
+            qualities += "Quality" + (index+1) + "=" + qholder + "\r\n";
         }
     }
 }
