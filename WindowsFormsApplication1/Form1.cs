@@ -37,10 +37,10 @@ namespace WindowsFormsApplication1
         {
             fileLocations = (string[])e.Data.GetData(DataFormats.FileDrop);
             parseTarget = System.IO.File.ReadAllText(fileLocations[0]);
-            parseHeader(parseTarget);
+            parseMain(parseTarget);
         }
 
-        void parseHeader(string target)
+        void parseMain(string target)
         {
             target = target.Replace("\r\n", String.Empty);
             target = target.Replace("Filter Settings fileRoom EQ V5.13Dated:", String.Empty);
@@ -69,7 +69,7 @@ namespace WindowsFormsApplication1
             }
 
             createFile();
-            return;
+            return; // End of conversion
         }
 
         void parseSubstring(string substring, int index)
@@ -97,12 +97,13 @@ namespace WindowsFormsApplication1
             qholder = qholder.Replace(" ", String.Empty);
             qualities += "Quality" + (index+1) + "=" + qholder + "\r\n";
         }
+
         void createFile()
         {
             string directory = @"C:\Users\Public\PeaceConverter\";
             System.IO.Directory.CreateDirectory(directory);
             exportValue = header + frequencies + gains + qualities + footer;
-            System.IO.File.WriteAllText(@"C:\Users\Public\PeaceConverter\Derek.peace", exportValue);
+            System.IO.File.WriteAllText(@"C:\Users\Public\PeaceConverter\ConvertedFile.peace", exportValue);
             System.Windows.Forms.MessageBox.Show("Conversion success \r\nFile saved to "+ directory);
         }
     }
