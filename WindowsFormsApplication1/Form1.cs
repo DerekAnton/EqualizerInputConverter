@@ -99,9 +99,11 @@ namespace WindowsFormsApplication1
         }
         void createFile()
         {
-            System.IO.Directory.CreateDirectory(@"C:\Users\Public\PeaceConverter\");
+            string directory = @"C:\Users\Public\PeaceConverter\";
+            System.IO.Directory.CreateDirectory(directory);
             exportValue = header + frequencies + gains + qualities + footer;
             System.IO.File.WriteAllText(@"C:\Users\Public\PeaceConverter\Derek.peace", exportValue);
+            System.Windows.Forms.MessageBox.Show("Conversion success \r\nFile saved to "+ directory);
         }
     }
 }
