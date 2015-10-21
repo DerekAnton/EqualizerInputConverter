@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
         private string[] fileLocations;
         private string parseTarget;
         private string exportValue;
-        string frequencies = "", gains = "", qualities = "";
+        string frequencies = "", gains = "", qualities = "", header, footer;
 
         public Form1()
         {
@@ -24,6 +24,8 @@ namespace WindowsFormsApplication1
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
             exportValue = "";
+            header = "[Speakers]\r\nSpeakerId0=0\r\nSpeakerTargets0=all\r\nSpeakerName0=All\r\nSpeakerId1=1\r\nSpeakerTargets1=L\r\nSpeakerName1=Left\r\nSpeakerId2=2\r\nSpeakerTargets2=R\r\nSpeakerName2=Right\r\nSpeakerId3=3\r\nSpeakerTargets3=C\r\nSpeakerName3=Center\r\nSpeakerId4=4\r\nSpeakerTargets4=SUB\r\nSpeakerName4=Subwoofer\r\nSpeakerId5=5\r\nSpeakerTargets5=RL\r\nSpeakerName5=Left rear\r\nSpeakerId6=6\r\nSpeakerTargets6=RR\r\nSpeakerName6=Right rear\r\nSpeakerId7=7\r\nSpeakerTargets7=SL\r\nSpeakerName7=Left side\r\nSpeakerId8=8\r\nSpeakerTargets8=SR\r\nSpeakerName8=Right side\r\n[General]\r\nPreAmp=2.5\r\n";
+            footer = "[Configuration]\r\nHotKey =\r\n";
         }
 
         void Form1_DragEnter(object sender, DragEventArgs e)
@@ -65,8 +67,9 @@ namespace WindowsFormsApplication1
                     areaOfFocus = 61 * counter;
                 }
             }
-            exportValue = frequencies + gains + qualities;
-            Console.Write(exportValue);
+
+            exportValue = header + frequencies + gains + qualities + footer;
+            System.IO.File.WriteAllText(@"C:\Users\Public\TestFolder\Derek.peace", exportValue);
             return;
         }
 
@@ -74,21 +77,22 @@ namespace WindowsFormsApplication1
         {
 
             if (index == 0)
-                frequencies = "[Frequencies]";
+                frequencies = "[Frequencies]\r\n";
 
             string fholder = substring.Substring(28, 7);
             fholder = fholder.Replace(" ", String.Empty);
+            fholder = fholder.Replace(",", String.Empty);
             frequencies += "Frequency" + (index+1) + "=" + fholder + "\r\n";
 
             if (index == 0)
-                gains = "[Gains]";
+                gains = "[Gains]\r\n";
 
             string gholder = substring.Substring(45, 5);
             gholder = gholder.Replace(" ", String.Empty);
             gains += "Gain" + (index+1) + "=" + gholder + "\r\n";
                 
             if (index == 0)
-                qualities = "[Qualities]";
+                qualities = "[Qualities]\r\n";
 
             string qholder = substring.Substring(57, 4);
             qholder = qholder.Replace(" ", String.Empty);
