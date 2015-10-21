@@ -1,5 +1,6 @@
 # Vanishing Cage
-A simple C# application for converting a FlatBoth.txt to a .peace ini style file.
+A simple C# application for converting a FlatBoth.txt to a .peace ini style file. 
+(add the names of the 2 programs i recieve and send files for)
 
 For my dad's audio project.
 
@@ -13,13 +14,16 @@ For my dad's audio project.
 • Add minimize to tray functionality?
     Add favicon for program/tray icon caged bird
     
-• GUI enhancements: make not resizeable, add a place for a user to search for the file through a file browser, show that the user can drag-and-drop a file onto the GUI as well, aesthetic changes(Name of my program in large letters, a dotted line around some text/white space saying "drag and drop target file here" and then have "or browse your pc for it" with a built in file browser)?
+• Right-click menu integration in windows explorer.
+    Allow a user to right-click a text file and send it to my converter.
+    
+• GUI enhancements
+    make not resizeable, add a place for a user to search for the file through a file browser, show that the user can     drag-and-drop a file onto the GUI as well, aesthetic changes(Name of my program in large letters, a dotted line     around some text/white space saying "drag and drop target file here" and then have "or browse your pc for it" with a     built in file browser)?
 
-caged bird theme? black and creme color scheme?
+• Theme Look & Feel
+Caged bird theme - black and creme color scheme
 icon= http://www.strangerdimensions.com/wp-content/uploads/2013/03/bird_cage.gif 
 background= https://www.fancyhometrends.com/documents/image/13/133852/Rasch--Tapete--Deco--Chic--2015--728538--Uni--crem.jpg
-
-Name of application: Vanishing Cage
 
 
     
