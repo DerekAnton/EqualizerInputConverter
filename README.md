@@ -8,9 +8,16 @@ C# application for my dad's audio project.
 • Create msi installer -> if we can get admin privledges we can install to C:\Program Files\ ... for other things
 
 • Add minimize to tray functionality?
-    Add favicon for program/tray icon
+    Add favicon for program/tray icon caged bird
     
 • GUI enhancements: make not resizeable, add a place for a user to search for the file through a file browser, show that the user can drag-and-drop a file onto the GUI as well, aesthetic changes(Name of my program in large letters, a dotted line around some text/white space saying "drag and drop target file here" and then have "or browse your pc for it" with a built in file browser)?
+
+caged bird theme? black and creme color scheme?
+icon= http://www.strangerdimensions.com/wp-content/uploads/2013/03/bird_cage.gif 
+background= https://www.fancyhometrends.com/documents/image/13/133852/Rasch--Tapete--Deco--Chic--2015--728538--Uni--crem.jpg
+
+Name of application: Vanishing Cage
+
 
     
 
