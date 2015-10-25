@@ -1,6 +1,6 @@
 # Vanishing Cage
-A simple C# application for converting a FlatBoth.txt to a .peace ini style file. 
-(add the names of the 2 programs i recieve and send files for)
+A simple C# application for converting a RoomEQWizard.txt to a .peace file. 
+The two programs i interface with are Room EQ Wizard and PEACE “Peters Equalizer APO Configuration Extension”
 
 For my dad's audio project.
 
