@@ -14,9 +14,7 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private string[] fileLocations;
-        private string parseTarget;
-        private string exportValue;
-        string frequencies = "", gains = "", qualities = "", vanishingCageDirectory, header, footer;
+        private string parseTarget, exportValue, frequencies, gains, qualities, vanishingCageDirectory, draggedFileName, header, footer;
 
         public Form1()
         {
@@ -24,6 +22,9 @@ namespace WindowsFormsApplication1
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
+            frequencies = "";
+            gains = "";
+            qualities = "";
             exportValue = "";
             header = "[Speakers]\r\nSpeakerId0=0\r\nSpeakerTargets0=all\r\nSpeakerName0=All\r\nSpeakerId1=1\r\nSpeakerTargets1=L\r\nSpeakerName1=Left\r\nSpeakerId2=2\r\nSpeakerTargets2=R\r\nSpeakerName2=Right\r\nSpeakerId3=3\r\nSpeakerTargets3=C\r\nSpeakerName3=Center\r\nSpeakerId4=4\r\nSpeakerTargets4=SUB\r\nSpeakerName4=Subwoofer\r\nSpeakerId5=5\r\nSpeakerTargets5=RL\r\nSpeakerName5=Left rear\r\nSpeakerId6=6\r\nSpeakerTargets6=RR\r\nSpeakerName6=Right rear\r\nSpeakerId7=7\r\nSpeakerTargets7=SL\r\nSpeakerName7=Left side\r\nSpeakerId8=8\r\nSpeakerTargets8=SR\r\nSpeakerName8=Right side\r\n[General]\r\nPreAmp=2.5\r\n";
             footer = "[Configuration]\r\nHotKey =\r\n";
@@ -42,16 +43,19 @@ namespace WindowsFormsApplication1
         {
             fileLocations = (string[])e.Data.GetData(DataFormats.FileDrop);
             parseTarget = File.ReadAllText(fileLocations[0]);
-            parseMain(parseTarget);
+            draggedFileName = Path.GetFileNameWithoutExtension(fileLocations[0]);
+            parseMain(parseTarget, draggedFileName);
         }
 
-        void parseMain(string target)
+        void parseMain(string target, string filename)
         {
             target = target.Replace("\r\n", String.Empty);
             target = target.Replace("Filter Settings fileRoom EQ V5.13Dated:", String.Empty);
-            target = target.Substring(23, target.Length - 23);
-            target = target.Replace("MNotes", "Notes");
-            target = target.Replace("Notes:flat-bothEqualiser: GenericAverage 1", String.Empty);
+            target = target.Substring(23, target.Length - 23); // date will either be 23 or 24 characters, if it is 24 characters, it will add an extra 'M' to notes.
+            target = target.Replace("MNotes", "Notes"); // this covers the case of the a second digit on the date.
+            target = target.Replace("Notes:" + filename + "Equaliser: Generic", String.Empty);
+            target = target.Replace("Average 1", string.Empty); //what is this?? it is either average 1 or no measurements? how can i make this less hardcoded?
+            target = target.Replace("No measurement", string.Empty);
             if(target[0].Equals(' '))
             {
                 target = target.Substring(1, target.Length - 1);
@@ -64,7 +68,7 @@ namespace WindowsFormsApplication1
                 if (target.Substring(14 + areaOfFocus, 8).Equals(" None   "))
                 {
                     // The empty filter case. nothing to do here.
-                    areaOfFocus += 14;
+                    areaOfFocus += 22;
                 }
                 else
                 {
