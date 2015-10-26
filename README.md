@@ -1,14 +1,13 @@
 # Vanishing Cage
-A simple C# application for converting a RoomEQWizard.txt to a .peace file. 
+A simple C# application for converting a RoomEQWizard output file to a .peace file. 
 
 The two programs i interface with are 
 
 Room EQ Wizard and PEACE “Peters Equalizer APO Configuration Extension”
 
-For my dad's audio project.
 
 # TODO
-• After a user has drag-and-dropped the input file to the GUI, ask them for a preferred directory to save too.
+☑ After a user has drag-and-dropped the input file to the GUI, ask them for a preferred directory to save too.
     if not given or does not exist -> create directory and save .peace file to c:\Users\Public\PeaceConverter 
 
 • Create msi installer -> if we can get admin privledges we can install to C:\Program Files\ ... for other things
