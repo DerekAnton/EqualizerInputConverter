@@ -28,9 +28,7 @@ namespace WindowsFormsApplication1
             exportValue = "";
             header = "[Speakers]\r\nSpeakerId0=0\r\nSpeakerTargets0=all\r\nSpeakerName0=All\r\nSpeakerId1=1\r\nSpeakerTargets1=L\r\nSpeakerName1=Left\r\nSpeakerId2=2\r\nSpeakerTargets2=R\r\nSpeakerName2=Right\r\nSpeakerId3=3\r\nSpeakerTargets3=C\r\nSpeakerName3=Center\r\nSpeakerId4=4\r\nSpeakerTargets4=SUB\r\nSpeakerName4=Subwoofer\r\nSpeakerId5=5\r\nSpeakerTargets5=RL\r\nSpeakerName5=Left rear\r\nSpeakerId6=6\r\nSpeakerTargets6=RR\r\nSpeakerName6=Right rear\r\nSpeakerId7=7\r\nSpeakerTargets7=SL\r\nSpeakerName7=Left side\r\nSpeakerId8=8\r\nSpeakerTargets8=SR\r\nSpeakerName8=Right side\r\n[General]\r\nPreAmp=2.5\r\n";
             footer = "[Configuration]\r\nHotKey =\r\n";
-
-            // Create a default directory to use if nothing was selected.
-            vanishingCageDirectory = "C:\\Users\\Public\\VanishingCage\\";
+            vanishingCageDirectory = "C:\\Users\\Public\\VanishingCage\\"; // Create a default directory to use if nothing was selected.
             Directory.CreateDirectory(vanishingCageDirectory);
         }
 
@@ -51,11 +49,11 @@ namespace WindowsFormsApplication1
         {
             target = target.Replace("\r\n", String.Empty);
             target = target.Replace("Filter Settings fileRoom EQ V5.13Dated:", String.Empty);
-            target = target.Substring(23, target.Length - 23); // date will either be 23 or 24 characters, if it is 24 characters, it will add an extra 'M' to notes.
-            target = target.Replace("MNotes", "Notes"); // this covers the case of the a second digit on the date.
+            target = target.Substring(23, target.Length - 23); // Date will either be 23 or 24 characters, if it is 24 characters, it will add an extra 'M' to notes.
+            target = target.Replace("MNotes", "Notes"); // This covers the case of the a second digit on the date.
             target = target.Replace("Notes:" + filename + "Equaliser: Generic", String.Empty);
-            target = target.Replace("Average 1", string.Empty); //what is this?? it is either average 1 or no measurements? how can i make this less hardcoded?
-            target = target.Replace("No measurement", string.Empty);
+            target = target.Replace("Average 1", string.Empty);
+            target = target.Replace("No measurement", string.Empty); 
             if(target[0].Equals(' '))
             {
                 target = target.Substring(1, target.Length - 1);
@@ -73,7 +71,7 @@ namespace WindowsFormsApplication1
                 else
                 {
                     parseSubstring(target.Substring(areaOfFocus, 61), counter);
-                    areaOfFocus = 61 * counter;
+                    areaOfFocus += 61;
                 }
             }
 
@@ -95,7 +93,7 @@ namespace WindowsFormsApplication1
             if (index == 0)
                 gains = "[Gains]\r\n";
 
-            string gholder = substring.Substring(45, 5);
+            string gholder = substring.Substring(44, 5);
             gholder = gholder.Replace(" ", String.Empty);
             gains += "Gain" + (index+1) + "=" + gholder + "\r\n";
                 
