@@ -14,7 +14,21 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private string[] fileLocations;
-        private string parseTarget, exportValue, frequencies, gains, qualities, vanishingCageDirectory, draggedFileName, header, footer;
+        private string parseTarget, exportValue, frequencies, gains, qualities, vanishingCageDirectory, draggedFileName, header, footer, directory;
+        private bool noDumpStored = false;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DialogResult popupResult = MessageBox.Show("Would you like to change the default directory to convert to?", "Alert", MessageBoxButtons.YesNo);
+            if (popupResult == DialogResult.Yes)
+            {
+                directory = loadFromDumpFile(noDumpStored);
+                File.WriteAllText(directory + draggedFileName + ".peace", exportValue);
+                DialogResult popupResult2 = MessageBox.Show("Default has been changed successfully");
+            }
+            else
+            {/*do nothing*/}
+        }
 
         public Form1()
         {
@@ -26,6 +40,7 @@ namespace WindowsFormsApplication1
             gains = "";
             qualities = "";
             exportValue = "";
+            directory = "";
             header = "[Speakers]\r\nSpeakerId0=0\r\nSpeakerTargets0=all\r\nSpeakerName0=All\r\nSpeakerId1=1\r\nSpeakerTargets1=L\r\nSpeakerName1=Left\r\nSpeakerId2=2\r\nSpeakerTargets2=R\r\nSpeakerName2=Right\r\nSpeakerId3=3\r\nSpeakerTargets3=C\r\nSpeakerName3=Center\r\nSpeakerId4=4\r\nSpeakerTargets4=SUB\r\nSpeakerName4=Subwoofer\r\nSpeakerId5=5\r\nSpeakerTargets5=RL\r\nSpeakerName5=Left rear\r\nSpeakerId6=6\r\nSpeakerTargets6=RR\r\nSpeakerName6=Right rear\r\nSpeakerId7=7\r\nSpeakerTargets7=SL\r\nSpeakerName7=Left side\r\nSpeakerId8=8\r\nSpeakerTargets8=SR\r\nSpeakerName8=Right side\r\n[General]\r\nPreAmp=2.5\r\n";
             footer = "[Configuration]\r\nHotKey =\r\n";
             vanishingCageDirectory = "C:\\Users\\Public\\VanishingCage\\"; // Create a default directory to use if nothing was selected.
@@ -133,8 +148,7 @@ namespace WindowsFormsApplication1
         void createFile()
         {
             // Default directory
-            string directory = "";
-            bool noDumpStored = false;
+
 
             if (File.Exists(vanishingCageDirectory + "SavedDirectory.dump"))
             {
@@ -154,18 +168,8 @@ namespace WindowsFormsApplication1
 
             // Create the output file in string form
             exportValue = header + frequencies + gains + qualities + footer;
-
             File.WriteAllText(directory + "ConvertedFile.peace", exportValue);
-            DialogResult popupResult = MessageBox.Show("Conversion success \r\nFile saved to " + directory + "\r\n\r\n Would you like to change the default directory to convert to?", "Alert", MessageBoxButtons.YesNo);
-            if(popupResult == DialogResult.Yes)
-            {
-                directory = loadFromDumpFile(noDumpStored);
-                File.WriteAllText(directory + "ConvertedFile.peace", exportValue);
-                DialogResult popupResult2 = MessageBox.Show("Default has been changed successfully");
-            }
-            else
-            {/*do nothing*/}
-
+            MessageBox.Show("Conversion Success! saved to "+ directory);
         }
 
     }
