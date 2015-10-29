@@ -40,25 +40,23 @@ namespace WindowsFormsApplication1
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
             fileLocations = (string[])e.Data.GetData(DataFormats.FileDrop);
-            parseTarget = File.ReadAllText(fileLocations[0]);
+            StreamReader file = new StreamReader(fileLocations[0]);
+            string line = "";
+            int counter = 0;
+            while ((line = file.ReadLine()) != null)
+            {
+                //  Skip the first 8 lines, as these are the header.
+                if (counter > 8) 
+                    parseTarget += line;
+                counter++;
+            }
+
             draggedFileName = Path.GetFileNameWithoutExtension(fileLocations[0]);
             parseMain(parseTarget, draggedFileName);
         }
 
         void parseMain(string target, string filename)
         {
-            target = target.Replace("\r\n", String.Empty);
-            target = target.Replace("Filter Settings fileRoom EQ V5.13Dated:", String.Empty);
-            target = target.Substring(23, target.Length - 23); // Date will either be 23 or 24 characters, if it is 24 characters, it will add an extra 'M' to notes.
-            target = target.Replace("MNotes", "Notes"); // This covers the case of the a second digit on the date.
-            target = target.Replace("Notes:" + filename + "Equaliser: Generic", String.Empty);
-            target = target.Replace("Average 1", string.Empty);
-            target = target.Replace("No measurement", string.Empty); 
-            if(target[0].Equals(' '))
-            {
-                target = target.Substring(1, target.Length - 1);
-            }
-
             int areaOfFocus = 0; // This denotes the 61 characters that makes up each line of values to pull from the txt file.
             for (int counter = 0; counter < 20; counter ++) //for each filter (there will always be 20 filters)
             {
@@ -162,6 +160,7 @@ namespace WindowsFormsApplication1
             {
                 directory = loadFromDumpFile(noDumpStored);
                 File.WriteAllText(directory + "ConvertedFile.peace", exportValue);
+                DialogResult popupResult2 = MessageBox.Show("Default has been changed successfully");
             }
             else
             {/*do nothing*/}
