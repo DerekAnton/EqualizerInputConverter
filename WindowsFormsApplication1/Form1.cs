@@ -30,6 +30,7 @@ namespace WindowsFormsApplication1
             footer = "[Configuration]\r\nHotKey =\r\n";
             vanishingCageDirectory = "C:\\Users\\Public\\VanishingCage\\"; // Create a default directory to use if nothing was selected.
             Directory.CreateDirectory(vanishingCageDirectory);
+            pictureBox1.Image = Properties.Resources.final_box_sized;
         }
 
         void Form1_DragEnter(object sender, DragEventArgs e)
